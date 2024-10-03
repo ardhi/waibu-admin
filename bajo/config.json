@@ -1,0 +1,4 @@
+{
+  "alias": "wa",
+  "dependencies": ["waibu-db", "waibu-mpa", "waibu-extra"]
+}

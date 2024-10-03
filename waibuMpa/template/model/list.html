@@ -1,0 +1,10 @@
+<% const views = ['table', 'gridSmall', 'grid'] %>
+<c:wdb-table strip responsive />
+<c:grid-row margin="top-3" gutter="3">
+  <c:grid-col col="6-md">
+    <c:wdb-recs-info show-pages show-limits />
+  </c:grid-col>
+  <c:grid-col col="6-md" flex="justify-content:end">
+    <c:wdb-pagination />
+  </c:grid-col>
+</c:grid-row>
