@@ -3,7 +3,7 @@ import path from 'path'
 const disableds = ['id', 'createdAt', 'updatedAt']
 
 function applyLayout ({ schema, hidden, plaintext } = {}) {
-  const { map, each, isString, pullAt, trim, find } = this.bajo.helper._
+  const { map, each, isString, pullAt, trim, find } = this.app.bajo.lib._
   if ((schema.view.layouts ?? []).length === 0) {
     schema.view.layouts = [{
       fields: map(schema.properties, p => {
@@ -41,7 +41,7 @@ function applyLayout ({ schema, hidden, plaintext } = {}) {
 const handler = {
   list: async function (schema, hidden) {
   },
-  detail: async function (schema, hidden) {
+  details: async function (schema, hidden) {
     applyLayout.call(this, { schema, hidden, plaintext: true })
   },
   add: async function (schema, hidden) {
