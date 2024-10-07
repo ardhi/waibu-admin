@@ -1,14 +1,11 @@
 ---
-t:title: Waibu Admin
 css:
   - waibuDb.virtual:/bs-table/bootstrap-table.min.css
 scripts:
   - waibuDb.virtual:/bs-table/bootstrap-table.min.js
   - ^waibuExtra.virtual:/jquery/jquery.min.js
 ---
-<c:page-start>
-  <title><%= frontMatter.title ?? page.title %></title>
-</c:page-start>
+<c:page-start title="<%= page.fullTitle %>" />
 <c:include resource="waibuAdmin.template:/partial/layout/navbar.html" />
 <c:container margin="top-4 bottom-5">
   <c:grid-row>
