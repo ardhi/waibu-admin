@@ -1,4 +1,4 @@
 {
-  "alias": "wa",
+  "prefix": "admin",
   "dependencies": ["waibu-db", "waibu-mpa", "waibu-extra"]
 }
