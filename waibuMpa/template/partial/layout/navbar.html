@@ -1,7 +1,23 @@
 <c:navbar position="type:sticky-top" background="color:primary-subtle" text="color:white" container expandable>
   <c:navbar-brand content="<%= page.appTitle %>" />
+  <c:nav tag="ul">
+    <c:nav-item t:content="Model" open="model-drawer:offcanvas" />
+  </c:nav>
   <c:nav tag="ul" dim="width:100" flex="justify-content:end">
     <c:nav-selector-darkmode dropdown-menu="end" />
     <c:nav-selector-language dropdown-menu="end" />
   </c:nav>
 </c:navbar>
+<c:drawer t:title="Model" id="model-drawer" side="start" no-padding style="width: 300px;">
+  <c:accordion no-border>
+    <% for (const item of menu.models) { %>
+    <c:accordion-item t:header="<%= item.name %>" no-padding>
+      <c:list type="group" no-border hover>
+      <% for (const child of item.children ) { %>
+        <c:list-item href="waibuAdmin:/model/<%= child.id %>/list" t:content="<%= child.name %>" />
+      <% } %>
+      </c:list>
+    </c:accordion-item>
+    <% } %>
+  </c:accordion>
+</c:drawer>

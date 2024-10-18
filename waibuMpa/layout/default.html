@@ -1,19 +1,20 @@
 ---
-css:
-  - waibuDb.virtual:/bs-table/bootstrap-table.min.css
-scripts:
-  - waibuDb.virtual:/bs-table/bootstrap-table.min.js
-  - ^waibuExtra.virtual:/jquery/jquery.min.js
+# css:
+#   - waibuDb.virtual:/bs-table/bootstrap-table.min.css
+# scripts:
+#   - waibuDb.virtual:/bs-table/bootstrap-table.min.js
+#   - ^waibuExtra.virtual:/jquery/jquery.min.js
 ---
 <c:page-start title="<%= page.fullTitle %>" />
 <c:include resource="waibuAdmin.template:/partial/layout/navbar.html" />
-<c:container margin="top-4 bottom-5">
+<c:container margin="bottom-5">
   <c:grid-row>
-    <c:grid-col col="8-sm 9-md 10-lg">
+    <c:grid-col col="8-md 9-lg">
+      <c:include resource="waibuAdmin.template:/partial/layout/breadcrumb.html" />
       <!-- body -->
     </c:grid-col>
-    <c:grid-col col="4-sm 3-md 2-lg">
-      right
+    <c:grid-col col="4-md 3-lg">
+      <c:include resource="waibuAdmin.template:/partial/layout/sidebar.html" />
     </c:grid-col>
   </c:grid-row>
 </c:container>

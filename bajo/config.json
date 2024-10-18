@@ -1,4 +1,7 @@
 {
   "prefix": "admin",
+  "model": {
+    "excludes": []
+  },
   "dependencies": ["waibu-db", "waibu-mpa", "waibu-extra"]
 }
