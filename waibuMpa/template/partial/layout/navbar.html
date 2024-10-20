@@ -4,8 +4,10 @@
     <c:nav-item t:content="Model" open="model-drawer:offcanvas" />
   </c:nav>
   <c:nav tag="ul" dim="width:100" flex="justify-content:end">
-    <c:nav-selector-darkmode dropdown-menu="end" />
-    <c:nav-selector-language dropdown-menu="end" />
+    <c:nav-toggle-fullscreen />
+    <c:nav-divider />
+    <c:nav-select-darkmode dropdown-menu="end" />
+    <c:nav-select-language dropdown-menu="end" />
   </c:nav>
 </c:navbar>
 <c:drawer t:title="Model" id="model-drawer" side="start" no-padding style="width: 300px;">
