@@ -1,13 +1,14 @@
-<c:navbar position="type:sticky-top" background="color:primary-subtle" text="color:white" container expandable>
+<c:navbar position="type:sticky-top" background="color:primary-subtle" container expandable>
   <c:navbar-brand content="<%= page.appTitle %>" />
   <c:nav tag="ul">
     <c:nav-item t:content="Model" open="model-drawer:offcanvas" />
   </c:nav>
   <c:nav tag="ul" dim="width:100" flex="justify-content:end">
-    <c:nav-toggle-fullscreen />
+    <c:nav-dropdown-user dropdown-menu="end" />
     <c:nav-divider />
-    <c:nav-select-darkmode dropdown-menu="end" />
-    <c:nav-select-language dropdown-menu="end" />
+    <c:nav-toggle-fullscreen />
+    <c:nav-dropdown-darkmode dropdown-menu="end" />
+    <c:nav-dropdown-language dropdown-menu="end" />
   </c:nav>
 </c:navbar>
 <c:drawer t:title="Model" id="model-drawer" side="start" no-padding style="width: 300px;">
