@@ -1,2 +1,5 @@
-<c:heading move-to="#subtitle" type="5" t:content="%s - List|<%= page.modelTitle %>" />
+---
+layout: waibuAdmin.layout:/model-wide.html
+---
+<c:heading move-to="#subtitle" type="5" t:content="%s - %s|<%= page.modelTitle %>|<%= _t('List') %>" />
 <c:include resource="waibuDb.template:/partial/list-handler.html" />

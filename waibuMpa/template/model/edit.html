@@ -1,2 +1,5 @@
-<c:heading move-to="#subtitle" type="5" t:content="%s - Edit|<%= page.modelTitle %>" />
+---
+layout: waibuAdmin.layout:/model.html
+---
+<c:heading move-to="#subtitle" type="5" t:content="%s - %s|<%= page.modelTitle %>|<%= _t('Edit') %>" />
 <c:include resource="waibuDb.template:/partial/edit-handler.html" />

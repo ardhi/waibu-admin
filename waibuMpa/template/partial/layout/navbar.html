@@ -1,26 +1,10 @@
-<c:navbar position="type:sticky-top" background="color:primary-subtle" container expandable>
-  <c:navbar-brand content="<%= page.appTitle %>" />
-  <c:nav tag="ul">
-    <c:nav-item t:content="Model" open="model-drawer:offcanvas" />
-  </c:nav>
-  <c:nav tag="ul" dim="width:100" flex="justify-content:end">
-    <c:nav-dropdown-user dropdown-menu="end" />
-    <c:nav-divider />
-    <c:nav-toggle-fullscreen />
-    <c:nav-dropdown-darkmode dropdown-menu="end" />
-    <c:nav-dropdown-language dropdown-menu="end" />
-  </c:nav>
+<c:navbar position="type:sticky-top" padding="x-3" border="side:bottom" background="color:body" dim="width:100">
+  <c:grid-row gutter="0" dim="width:100">
+    <c:grid-col col="6-lg" flex="align-items:center">
+      <div id="subtitle"></div>
+    </c:grid-col>
+    <c:grid-col col="6-lg" flex="justify-content:end-lg align-items:center">
+      <c:include resource="waibuBootstrap.template:/partial/breadcrumb.html" />
+    </c:grid-col>
+  </c:grid-row>
 </c:navbar>
-<c:drawer t:title="Model" id="model-drawer" side="start" no-padding style="width: 300px;">
-  <c:accordion no-border>
-    <% for (const item of menu.models) { %>
-    <c:accordion-item t:header="<%= item.name %>" no-padding>
-      <c:list type="group" no-border hover>
-      <% for (const child of item.children ) { %>
-        <c:list-item href="waibuAdmin:/model/<%= child.id %>/list" t:content="<%= child.name %>" />
-      <% } %>
-      </c:list>
-    </c:accordion-item>
-    <% } %>
-  </c:accordion>
-</c:drawer>
