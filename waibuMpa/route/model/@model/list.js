@@ -1,5 +1,3 @@
-import preHandler from '../../../../lib/pre-handler.js'
-
 export function buildParams ({ req, reply, action }) {
   const { camelCase, kebabCase, map, upperFirst } = this.app.bajo.lib._
   const { getSchema } = this.app.dobo
@@ -12,7 +10,8 @@ export function buildParams ({ req, reply, action }) {
     modelTitle
   }
   const breadcrumb = [
-    { icon: 'house', href: 'waibuAdmin:/' },
+    { icon: 'house', href: '/' },
+    { content: 'Admin', href: 'waibuAdmin:/' },
     { content: 'Model', href: 'waibuAdmin:/model' },
     { content: modelTitleShort, href: `waibuAdmin:/model/${req.params.model}/list`, hrefRebuild: ['list', 'id', 'mode'] },
     { content: action }
@@ -67,7 +66,6 @@ export async function addOnsHandler ({ req, reply, data, schema }) {
 
 const list = {
   method: ['GET', 'POST'],
-  preHandler,
   handler: async function (req, reply) {
     const { importModule } = this.app.bajo
     const handler = await importModule('waibuDb:/lib/crud/list-handler.js')

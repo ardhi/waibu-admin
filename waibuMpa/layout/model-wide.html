@@ -2,7 +2,7 @@
 <c:main flex>
   <c:include resource="waibuAdmin.template:/partial/layout/sidebar.html" />
   <c:div flex="fill column">
-    <c:include resource="waibuAdmin.template:/partial/layout/navbar.html" />
+    <c:include resource="waibuAdmin.template:/partial/layout/navbar-autofill-breadcrumb.html" />
     <c:container margin="start-0 top-3 bottom-5" style="max-width: 1200px;">
       <% if (arguments[0].addOns && arguments[0].addOns.length > 0) { %>
       <c:grid-row gutter="3">
@@ -19,4 +19,5 @@
     </c:container>
   </c:div>
 </c:main>
-<c:page-end back-to-top />
+<c:app-launcher />
+<c:page-end back-to-top/>

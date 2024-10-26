@@ -1,9 +1,7 @@
-import preHandler from '../../../../lib/pre-handler.js'
 import { addOnsHandler, buildParams } from './list.js'
 
 const add = {
   method: ['GET', 'POST'],
-  preHandler,
   handler: async function (req, reply) {
     const { importModule } = this.app.bajo
     const handler = await importModule('waibuDb:/lib/crud/add-handler.js')

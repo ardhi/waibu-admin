@@ -1,10 +1,16 @@
 {
-  "title": "Waibu Admin",
   "model": {
     "excludes": []
   },
   "waibu": {
+    "title": "Admin",
     "prefix": "admin"
+  },
+  "waibuMpa": {
+    "home": "waibuAdmin:/dashboard",
+    "redirect": {
+      "/": "waibuAdmin:/dashboard"
+    }
   },
   "dependencies": ["waibu-db", "waibu-mpa", "waibu-extra"]
 }
