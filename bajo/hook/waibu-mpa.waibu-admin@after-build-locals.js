@@ -3,7 +3,7 @@ import buildModelMenu from '../../lib/build-model-menu.js'
 async function afterBuildLocals (locals, req) {
   const { routePath, getPluginByPrefix } = this.app.waibu
   const { getAppTitle } = this.app.waibuMpa
-  const { set, get } = this.app.bajo.lib._
+  const { set, get, isString, last } = this.app.bajo.lib._
   const items = []
   if (!req.user) return
   items.push({ icon: 'speedometer', href: routePath('waibuAdmin:/dashboard') })
@@ -24,11 +24,19 @@ async function afterBuildLocals (locals, req) {
   // scan subroutes
   const route = {}
   for (const r of this.app.waibu.routes) {
-    if (r.method === 'GET' && get(r, 'config.webApp') === 'waibuMpa' && get(r, 'config.ns') === this.name) {
-      const [,, prefix, item] = r.url.split('/')
+    const methods = isString(r.method) ? [r.method] : r.method
+    if (methods.includes('GET') && get(r, 'config.webApp') === 'waibuMpa' && get(r, 'config.ns') === this.name) {
+      let url = r.url
+      const parts = url.split('/')
+      if (last(parts) === ':action') {
+        parts.pop()
+        parts.push('list')
+        url = parts.join('/')
+      }
+      const [,, prefix, item] = url.split('/')
       const plugin = getPluginByPrefix(prefix)
       if (plugin) {
-        const title = get(r, 'config.title', item)
+        const title = req.t(get(r, 'config.title', item))
         if (!route[plugin.name]) {
           route[plugin.name] = {
             icon: get(this, `app.${plugin.name}.config.waibuMpa.icon`, 'grid'),
@@ -40,7 +48,7 @@ async function afterBuildLocals (locals, req) {
             ]
           }
         }
-        route[plugin.name].html.push(`<c:dropdown-item href="${r.url}" t:content="${title}" />`)
+        route[plugin.name].html.push(`<c:dropdown-item href="${url}" t:content="${title}" />`)
       }
     }
   }
