@@ -1,55 +1,45 @@
-import buildModelMenu from '../../lib/build-model-menu.js'
-
 async function afterBuildLocals (locals, req) {
+  const { callHandler } = this.app.bajo
   const { routePath, getPluginByPrefix } = this.app.waibu
   const { getAppTitle } = this.app.waibuMpa
-  const { set, get, isString, last } = this.app.bajo.lib._
+  const { get, isString, last } = this.app.bajo.lib._
   const items = []
   if (!req.user) return
   items.push({ icon: 'speedometer', href: routePath('waibuAdmin:/dashboard') })
-  // models
-  set(locals, 'menu.models', buildModelMenu.call(this))
-  const ddModels = ['<c:dropdown-item t:content="Model Database" header /><c:dropdown-item divider />']
-  ddModels.push('<div><c:accordion no-border text="nowrap" style="margin-top:-5px;margin-bottom:-5px;">')
-  for (const item of locals.menu.models) {
-    ddModels.push(`<c:accordion-item t:header="${item.name}&nbsp;&nbsp;" no-padding narrow-header>`)
-    ddModels.push('<c:list type="group" no-border hover>')
-    for (const child of item.children) {
-      ddModels.push(`<c:list-item href="waibuAdmin:/model/${child.id}/list" t:content="${child.name}" />`)
-    }
-    ddModels.push('</c:list></c:accordion-item>')
-  }
-  ddModels.push('</c:accordion></div>')
-  items.push({ icon: 'database', dropdown: true, 'dropdown-auto-close': 'outside', ohref: routePath('waibuAdmin:/model'), html: ddModels.join('\n') })
   // scan subroutes
   const route = {}
   for (const r of this.app.waibu.routes) {
     const methods = isString(r.method) ? [r.method] : r.method
-    if (methods.includes('GET') && get(r, 'config.webApp') === 'waibuMpa' && get(r, 'config.ns') === this.name) {
-      let url = r.url
-      const parts = url.split('/')
-      if (last(parts) === ':action') {
-        parts.pop()
-        parts.push('list')
-        url = parts.join('/')
-      }
-      const [,, prefix, item] = url.split('/')
-      const plugin = getPluginByPrefix(prefix)
-      if (plugin) {
-        const title = req.t(get(r, 'config.title', item))
-        if (!route[plugin.name]) {
-          route[plugin.name] = {
-            icon: get(this, `app.${plugin.name}.config.waibuMpa.icon`, 'grid'),
-            dropdown: true,
-            ohref: routePath(`${this.name}:/${prefix}`),
-            html: [
-              `<c:dropdown-item header t:content="${getAppTitle(plugin.name)}" />`,
-              '<c:dropdown-item divider />'
-            ]
-          }
+    if (!(methods.includes('GET') && get(r, 'config.webApp') === 'waibuMpa' && get(r, 'config.ns') === this.name)) continue
+    let url = r.url
+    const parts = url.split('/')
+    if (last(parts) === ':action') {
+      parts.pop()
+      parts.push('list')
+      url = parts.join('/')
+    }
+    const [,, prefix, item] = url.split('/')
+    const plugin = getPluginByPrefix(prefix)
+    if (plugin) {
+      const title = req.t(get(r, 'config.title', item))
+      const menuHandler = get(this, `app.${plugin.name}.config.waibuMpa.menuHandler`)
+      if (!route[plugin.name]) {
+        route[plugin.name] = {
+          icon: get(this, `app.${plugin.name}.config.waibuMpa.icon`, 'grid'),
+          dropdown: true,
+          ohref: routePath(`${this.name}:/${prefix}`),
+          html: [
+            `<c:dropdown-item header t:content="${getAppTitle(plugin.name)}" />`,
+            '<c:dropdown-item divider />'
+          ]
         }
-        route[plugin.name].html.push(`<c:dropdown-item href="${url}" t:content="${title}" />`)
+        if (menuHandler) {
+          route[plugin.name]['dropdown-auto-close'] = 'outside'
+          const menu = await callHandler(menuHandler, locals, req)
+          route[plugin.name].html.push(...menu)
+        }
       }
+      if (!menuHandler) route[plugin.name].html.push(`<c:dropdown-item href="${url}" t:content="${title}" />`)
     }
   }
   for (const r in route) {

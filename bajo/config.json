@@ -1,7 +1,4 @@
 {
-  "model": {
-    "excludes": []
-  },
   "waibu": {
     "title": "Admin",
     "prefix": "admin"
