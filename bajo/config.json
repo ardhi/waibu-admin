@@ -6,7 +6,8 @@
   "waibuMpa": {
     "home": "waibuAdmin:/dashboard",
     "redirect": {
-      "/": "waibuAdmin:/dashboard"
+      "/": "waibuAdmin:/dashboard",
+      "/*": "waibuAdmin:handleNotFound"
     }
   },
   "dependencies": ["waibu-db", "waibu-mpa", "waibu-extra"]

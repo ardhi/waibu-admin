@@ -1,7 +1,9 @@
 <c:navbar position="type:sticky-top" padding="x-3" border="side:bottom" background="color:body" style="min-height:57px">
   <c:grid-row gutter="0" dim="width:100">
     <c:grid-col col="6-lg" flex="align-items:center">
-      <div id="subtitle"></div>
+      <div id="fullTitle">
+        <c:heading type="5" t:content="<%= page.fullTitle %>" />
+      </div>
     </c:grid-col>
     <c:grid-col col="6-lg" flex="justify-content:end-lg align-items:center">
       <c:breadcrumb auto-detect href-rebuild margin="all-0"/>
