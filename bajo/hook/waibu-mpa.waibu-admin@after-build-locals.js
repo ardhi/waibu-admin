@@ -22,7 +22,7 @@ async function afterBuildLocals (locals, req) {
     const plugin = getPluginByPrefix(prefix)
     if (plugin) {
       const title = req.t(get(r, 'config.title', item))
-      const menuHandler = get(this, `app.${plugin.name}.config.waibuMpa.menuHandler`)
+      const menuHandler = get(this, `app.${plugin.name}.config.waibuAdmin.menuHandler`)
       if (!route[plugin.name]) {
         route[plugin.name] = {
           icon: get(this, `app.${plugin.name}.config.waibuMpa.icon`, 'grid'),
