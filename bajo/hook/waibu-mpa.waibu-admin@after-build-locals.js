@@ -23,6 +23,7 @@ async function afterBuildLocals (locals, req) {
     if (plugin) {
       const title = req.t(get(r, 'config.title', item))
       const menuHandler = get(this, `app.${plugin.name}.config.waibuAdmin.menuHandler`)
+      if (menuHandler === false) continue
       if (!route[plugin.name]) {
         route[plugin.name] = {
           icon: get(this, `app.${plugin.name}.config.waibuMpa.icon`, 'grid'),
@@ -39,7 +40,10 @@ async function afterBuildLocals (locals, req) {
           route[plugin.name].html.push(...menu)
         }
       }
-      if (!menuHandler) route[plugin.name].html.push(`<c:dropdown-item href="${url}" t:content="${title}" />`)
+      if (!menuHandler) {
+        const active = req.url.startsWith(url)
+        route[plugin.name].html.push(`<c:dropdown-item href="${url}" t:content="${title}" ${active ? 'active' : ''}/>`)
+      }
     }
   }
   for (const r in route) {
