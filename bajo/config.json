@@ -9,6 +9,5 @@
       "/": "waibuAdmin:/dashboard",
       "/*": "waibuAdmin:handleNotFound"
     }
-  },
-  "dependencies": ["waibu-db", "waibu-mpa", "waibu-extra"]
+  }
 }
