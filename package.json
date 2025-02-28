@@ -1,6 +1,6 @@
 {
   "name": "waibu-admin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Admin for Waibu MPA",
   "main": "index.js",
   "scripts": {
