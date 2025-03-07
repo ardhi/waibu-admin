@@ -1,0 +1,5 @@
+[{
+  "path": "/**/*",
+  "methods": ["*"],
+  "teams": ["administrator"]
+}]

@@ -1,8 +1,0 @@
-[{
-  "path": "/**/*",
-  "methods": ["*"],
-  "roles": ["administrator"]
-}, {
-  "path": "!/dashboard",
-  "methods": ["*"]
-}]

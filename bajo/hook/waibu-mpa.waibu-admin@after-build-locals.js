@@ -36,7 +36,7 @@ async function afterBuildLocals (locals, req) {
         }
         if (menuHandler) {
           route[plugin.name]['dropdown-auto-close'] = 'outside'
-          const menu = await callHandler(menuHandler, locals, req)
+          const menu = await callHandler(this, menuHandler, locals, req)
           route[plugin.name].html.push(...menu)
         }
       }
