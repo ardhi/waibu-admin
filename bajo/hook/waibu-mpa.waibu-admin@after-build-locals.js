@@ -2,7 +2,7 @@ async function afterBuildLocals (locals, req) {
   const { callHandler } = this.app.bajo
   const { routePath, getPluginByPrefix } = this.app.waibu
   const { getAppTitle } = this.app.waibuMpa
-  const { get, isString, last } = this.app.bajo.lib._
+  const { get, isString, last } = this.lib._
   const items = []
   if (!req.user) return
   items.push({ icon: 'speedometer', href: routePath('waibuAdmin:/dashboard') })

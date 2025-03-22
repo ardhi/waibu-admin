@@ -44,7 +44,7 @@ async function factory (pkgName) {
 
     handleNotFound = async (req) => {
       const { getPluginByPrefix } = this.app.waibu
-      const { find, isString, get } = this.app.bajo.lib._
+      const { find, isString, get } = this.lib._
       const [, appPrefix, prefix] = req.url.split('/')
       const plugin = getPluginByPrefix(prefix)
       const appPlugin = getPluginByPrefix(appPrefix)
