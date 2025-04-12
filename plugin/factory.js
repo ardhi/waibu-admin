@@ -32,10 +32,10 @@ async function factory (pkgName) {
         for (const child of menu.children) {
           const active = locals._meta.url === routePath(child.href)
           if (active) hasActive = true
-          items.push(`<c:list-item href="${child.href}" t:content="${child.name}" ${active ? 'active' : ''} />`)
+          items.push(`<c:list-item href="${child.href}" t:content="${child.title}" ${active ? 'active' : ''} />`)
         }
         items.push('</c:list></c:accordion-item>')
-        items.unshift(`<c:accordion-item t:header="${menu.name}&nbsp;&nbsp;" body-no-padding narrow-header ${hasActive ? 'show-on-start' : ''}>`)
+        items.unshift(`<c:accordion-item header="${req.t(menu.title)}&nbsp;&nbsp;" body-no-padding narrow-header ${hasActive ? 'show-on-start' : ''}>`)
         dropdown.push(...items)
       }
       dropdown.push('</c:accordion></div>')
