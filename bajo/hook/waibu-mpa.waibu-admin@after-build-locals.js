@@ -1,6 +1,6 @@
 async function afterBuildLocals (locals, req) {
   const { callHandler } = this.app.bajo
-  const { routePath, getPluginByPrefix } = this.app.waibu
+  const { routePath } = this.app.waibu
   const { getAppTitle } = this.app.waibuMpa
   const { get, isString, last } = this.lib._
   const items = []
@@ -18,32 +18,30 @@ async function afterBuildLocals (locals, req) {
       parts.push('list')
       url = parts.join('/')
     }
+    if (!r.config.subRoute) continue
     const [,, prefix, item] = url.split('/')
-    const plugin = getPluginByPrefix(prefix)
-    if (plugin) {
-      const title = req.t(get(r, 'config.title', item))
-      const menuHandler = get(this, `app.${plugin.name}.config.waibuAdmin.menuHandler`)
-      if (menuHandler === false) continue
-      if (!route[plugin.name]) {
-        route[plugin.name] = {
-          icon: get(this, `app.${plugin.name}.config.waibuMpa.icon`, 'grid'),
-          dropdown: true,
-          ohref: routePath(`${this.name}:/${prefix}`),
-          html: [
-            `<c:dropdown-item header t:content="${getAppTitle(plugin.name)}" />`,
-            '<c:dropdown-item divider />'
-          ]
-        }
-        if (menuHandler) {
-          route[plugin.name]['dropdown-auto-close'] = 'outside'
-          const menu = await callHandler(menuHandler, locals, req)
-          route[plugin.name].html.push(...menu)
-        }
+    const title = req.t(get(r, 'config.title', item))
+    const menuHandler = get(this, `app.${r.config.subRoute}.config.waibuAdmin.menuHandler`)
+    if (menuHandler === false) continue
+    if (!route[r.config.subRoute]) {
+      route[r.config.subRoute] = {
+        icon: get(this, `app.${r.config.subRoute}.config.waibuMpa.icon`, 'grid'),
+        dropdown: true,
+        ohref: routePath(`${this.name}:/${prefix}`),
+        html: [
+          `<c:dropdown-item header t:content="${getAppTitle(r.config.subRoute)}" />`,
+          '<c:dropdown-item divider />'
+        ]
       }
-      if (!menuHandler) {
-        const active = req.url.startsWith(url)
-        route[plugin.name].html.push(`<c:dropdown-item href="${url}" t:content="${title}" ${active ? 'active' : ''}/>`)
+      if (menuHandler) {
+        route[r.config.subRoute]['dropdown-auto-close'] = 'outside'
+        const menu = await callHandler(menuHandler, locals, req)
+        route[r.config.subRoute].html.push(...menu)
       }
+    }
+    if (!menuHandler) {
+      const active = req.url.startsWith(url)
+      route[r.config.subRoute].html.push(`<c:dropdown-item href="${url}" t:content="${title}" ${active ? 'active' : ''}/>`)
     }
   }
   for (const r in route) {
