@@ -2,7 +2,7 @@ async function afterBuildLocals (locals, req) {
   const { callHandler } = this.app.bajo
   const { routePath } = this.app.waibu
   const { getAppTitle } = this.app.waibuMpa
-  const { get, isString, last } = this.lib._
+  const { get, isString, last, camelCase } = this.lib._
   const items = []
   if (!req.user) return
   items.push({ icon: 'speedometer', href: routePath('waibuAdmin:/dashboard') })
@@ -20,7 +20,7 @@ async function afterBuildLocals (locals, req) {
     }
     if (!r.config.subRoute) continue
     const [,, prefix, item] = url.split('/')
-    const title = req.t(get(r, 'config.title', item))
+    const title = req.t(get(r, 'config.title', req.t(camelCase(item))))
     const menuHandler = get(this, `app.${r.config.subRoute}.config.waibuAdmin.menuHandler`)
     if (menuHandler === false) continue
     if (!route[r.config.subRoute]) {
