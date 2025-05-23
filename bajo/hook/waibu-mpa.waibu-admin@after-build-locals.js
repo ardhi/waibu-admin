@@ -1,8 +1,9 @@
 async function afterBuildLocals (locals, req) {
-  const { callHandler } = this.app.bajo
+  const { callHandler, runHook } = this.app.bajo
+  const { getPluginPrefix } = this.app.waibu
   const { routePath } = this.app.waibu
   const { getAppTitle } = this.app.waibuMpa
-  const { get, isString, last, camelCase } = this.lib._
+  const { get, isString, last, camelCase, cloneDeep, isFunction } = this.lib._
   const items = []
   if (!req.user) return
   items.push({ icon: 'speedometer', href: routePath('waibuAdmin:/dashboard') })
@@ -23,10 +24,12 @@ async function afterBuildLocals (locals, req) {
     const title = req.t(get(r, 'config.title', req.t(camelCase(item))))
     const menuHandler = get(this, `app.${r.config.subRoute}.config.waibuAdmin.menuHandler`)
     if (menuHandler === false) continue
+    const menuCollapsible = get(this, `app.${r.config.subRoute}.config.waibuAdmin.menuCollapsible`)
     if (!route[r.config.subRoute]) {
       route[r.config.subRoute] = {
         icon: get(this, `app.${r.config.subRoute}.config.waibuMpa.icon`, 'grid'),
         dropdown: true,
+        ns: r.config.subRoute,
         ohref: routePath(`${this.name}:/${prefix}`),
         html: [
           `<c:dropdown-item header t:content="${getAppTitle(r.config.subRoute)}" />`,
@@ -34,8 +37,21 @@ async function afterBuildLocals (locals, req) {
         ]
       }
       if (menuHandler) {
+        const cprefix = getPluginPrefix(r.config.subRoute)
         route[r.config.subRoute]['dropdown-auto-close'] = 'outside'
-        const menu = await callHandler(menuHandler, locals, req)
+        let menu
+        if (isString(menuHandler)) menu = await callHandler(menuHandler, locals, req)
+        else if (isFunction(menuHandler)) menu = await menuHandler.call(this.app[r.config.subRoute], locals, req)
+        else menu = cloneDeep(menuHandler)
+        await runHook(`${r.config.subRoute}:afterAdminMenu`, menu, locals, req)
+        for (const m of menu) {
+          if (m.children) {
+            for (const c of m.children) {
+              c.href = c.href.replace('{prefix}', cprefix)
+            }
+          }
+        }
+        if (menuCollapsible) menu = await this.buildAccordionMenu(menu, locals, req)
         route[r.config.subRoute].html.push(...menu)
       }
     }
