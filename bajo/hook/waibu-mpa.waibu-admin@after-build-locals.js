@@ -52,6 +52,12 @@ async function afterBuildLocals (locals, req) {
           }
         }
         if (menuCollapsible) menu = await this.buildAccordionMenu(menu, locals, req)
+        else {
+          menu = menu.map(m => {
+            const url = routePath(m.href)
+            return `<c:dropdown-item href="${url}" t:content="${m.title}"/>`
+          })
+        }
         route[r.config.subRoute].html.push(...menu)
       }
     }
