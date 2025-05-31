@@ -30,6 +30,7 @@ async function factory (pkgName) {
         items.push('<c:list type="group" no-border hover>')
         let hasActive = false
         for (const child of menu.children) {
+          if (child.title === '-') continue
           const active = locals._meta.url === routePath(child.href)
           if (active) hasActive = true
           items.push(`<c:list-item href="${child.href}" t:content="${child.title}" ${active ? 'active' : ''} />`)

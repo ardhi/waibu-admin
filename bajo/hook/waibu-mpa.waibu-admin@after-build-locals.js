@@ -47,7 +47,7 @@ async function afterBuildLocals (locals, req) {
         for (const m of menu) {
           if (m.children) {
             for (const c of m.children) {
-              c.href = c.href.replace('{prefix}', cprefix)
+              if (c.href) c.href = c.href.replace('{prefix}', cprefix)
             }
           }
         }
@@ -55,6 +55,7 @@ async function afterBuildLocals (locals, req) {
         else {
           menu = menu.map(m => {
             const url = routePath(m.href)
+            if (m.title === '-') return '<c:dropdown-item divider />'
             return `<c:dropdown-item href="${url}" t:content="${m.title}"/>`
           })
         }
