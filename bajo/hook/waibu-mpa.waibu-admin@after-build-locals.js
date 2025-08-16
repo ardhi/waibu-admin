@@ -69,6 +69,7 @@ async function afterBuildLocals (locals, req) {
   }
   for (const r in route) {
     const item = route[r]
+    if (item.ns) item.title = getAppTitle(item.ns)
     item.html = item.html.join('\n')
     items.push(item)
   }
