@@ -1,7 +1,7 @@
 async function factory (pkgName) {
   const me = this
 
-  class WaibuAdmin extends this.lib.Plugin {
+  class WaibuAdmin extends this.app.pluginClass.base {
     static alias = 'wa'
     static dependencies = ['waibu-db', 'waibu-mpa', 'waibu-extra']
 
@@ -46,7 +46,7 @@ async function factory (pkgName) {
 
     handleNotFound = async (req) => {
       const { getPluginByPrefix } = this.app.waibu
-      const { find, isString, get } = this.lib._
+      const { find, isString, get } = this.app.lib._
       const [, appPrefix, prefix] = req.url.split('/')
       const plugin = getPluginByPrefix(prefix)
       const appPlugin = getPluginByPrefix(appPrefix)
