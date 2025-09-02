@@ -13,7 +13,6 @@ async function factory (pkgName) {
           prefix: 'admin'
         },
         waibuMpa: {
-          home: 'waibuAdmin:/dashboard',
           redirect: {
             '/': 'waibuAdmin:/dashboard',
             '/*': 'waibuAdmin:handleNotFound'
@@ -54,7 +53,7 @@ async function factory (pkgName) {
       if (plugin) {
         const route = find(this.app.waibu.routes, r => {
           const methods = isString(r.method) ? [r.method] : r.method
-          return get(r, 'config.subRoute') === plugin.name && methods.includes('GET') &&
+          return get(r, 'config.subRoute') === plugin.ns && methods.includes('GET') &&
             get(r, 'config.webApp') === 'waibuMpa' &&
             get(r, 'config.ns') === appPlugin.name
         })

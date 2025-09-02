@@ -11,7 +11,7 @@ async function afterBuildLocals (locals, req) {
   const route = {}
   for (const r of this.app.waibu.routes) {
     const methods = isString(r.method) ? [r.method] : r.method
-    if (!(methods.includes('GET') && get(r, 'config.webApp') === 'waibuMpa' && get(r, 'config.ns') === this.name)) continue
+    if (!(methods.includes('GET') && get(r, 'config.webApp') === 'waibuMpa' && get(r, 'config.ns') === this.ns)) continue
     let url = r.url
     const parts = url.split('/')
     if (last(parts) === ':action') {
@@ -30,7 +30,7 @@ async function afterBuildLocals (locals, req) {
         icon: get(this, `app.${r.config.subRoute}.config.waibuMpa.icon`, 'grid'),
         dropdown: true,
         ns: r.config.subRoute,
-        ohref: routePath(`${this.name}:/${prefix}`),
+        ohref: routePath(`${this.ns}:/${prefix}`),
         html: [
           `<c:dropdown-item header t:content="${getAppTitle(r.config.subRoute)}" />`,
           '<c:dropdown-item divider />'
