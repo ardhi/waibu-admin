@@ -19,10 +19,13 @@
         "link": "https://bajo.app/waibu"
       }, {
         "title": "NPM",
-        "link": "https://www.npmjs.com/package/waibu-"
+        "link": "https://www.npmjs.com/package/waibu-admin"
       }, {
         "title": "Github",
-        "link": "https://github.com/ardhi/waibu-"
+        "link": "https://github.com/ardhi/waibu-admin"
+      }, {
+        "title": "Bajo",
+        "link": "https://bajo.app"
       }]
     }
   },
