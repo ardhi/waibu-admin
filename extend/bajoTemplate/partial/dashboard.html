@@ -1,6 +1,6 @@
 <c:heading move-to="#subtitle" type="5" t:content="<%= page.title %>" />
 <c:grid-row gutter="3">
-  <% for (const sb of _.filter(sidebar, s => !s.component && s.ns)) { %>
+  <% for (const sb of _.filter(sidebar ?? [], s => !s.component && s.ns)) { %>
   <c:grid-col col="4-lg 3-md">
     <c:card>
       <c:card-body>
