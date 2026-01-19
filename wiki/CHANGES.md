@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-01-19
+
+- [2.1.5] Bug fix on app title & translation
+
 ## 2026-01-18
 
 - [2.1.4] Remove button bar on Drawer because the are already there in Sidebar's Settings button

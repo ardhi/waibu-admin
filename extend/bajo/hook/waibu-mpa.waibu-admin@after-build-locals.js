@@ -31,7 +31,7 @@ async function afterBuildLocals (locals, req) {
         ns: r.config.subRoute,
         ohref: routePath(`${this.ns}:/${prefix}`),
         html: [
-          `<c:dropdown-item header t:content="${getAppTitle(r.config.subRoute)}" />`,
+          `<c:dropdown-item header t:content="${req.t(getAppTitle(r.config.subRoute))}" />`,
           '<c:dropdown-item divider />'
         ]
       }
@@ -68,7 +68,7 @@ async function afterBuildLocals (locals, req) {
   }
   for (const r in route) {
     const item = route[r]
-    if (item.ns) item.title = getAppTitle(item.ns)
+    if (item.ns) item.title = req.t(getAppTitle(item.ns))
     item.html = item.html.join('\n')
     items.push(item)
   }
