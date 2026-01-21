@@ -2,7 +2,7 @@ async function afterBuildLocals (locals, req) {
   const { callHandler, runHook } = this.app.bajo
   const { getPluginPrefix } = this.app.waibu
   const { routePath } = this.app.waibu
-  const { getAppTitle } = this.app.waibuMpa
+  const { getPluginTitle } = this.app.waibuMpa
   const { get, isString, last, camelCase, cloneDeep, isFunction } = this.app.lib._
   const items = []
   items.push({ icon: 'speedometer', href: routePath('waibuAdmin:/dashboard') })
@@ -31,7 +31,7 @@ async function afterBuildLocals (locals, req) {
         ns: r.config.subRoute,
         ohref: routePath(`${this.ns}:/${prefix}`),
         html: [
-          `<c:dropdown-item header t:content="${req.t(getAppTitle(r.config.subRoute))}" />`,
+          `<c:dropdown-item header t:content="${req.t(getPluginTitle(r.config.subRoute))}" />`,
           '<c:dropdown-item divider />'
         ]
       }
@@ -68,7 +68,7 @@ async function afterBuildLocals (locals, req) {
   }
   for (const r in route) {
     const item = route[r]
-    if (item.ns) item.title = req.t(getAppTitle(item.ns))
+    if (item.ns) item.title = req.t(getPluginTitle(item.ns))
     item.html = item.html.join('\n')
     items.push(item)
   }
