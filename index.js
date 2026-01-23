@@ -29,26 +29,23 @@ async function factory (pkgName) {
       }
     }
 
-    buildAccordionMenu = async (menus, locals, req) => {
+    buildAccordionMenu = (menu, locals, req) => {
       const { routePath } = this.app.waibu
-      const dropdown = []
-      dropdown.push('<div><c:accordion no-border text="nowrap" style="margin-top:-5px;margin-bottom:-5px;">')
-      for (const menu of menus) {
-        const items = []
-        items.push('<c:list type="group" no-border hover>')
-        let hasActive = false
-        for (const child of menu.children) {
-          if (child.title === '-') continue
-          const active = locals._meta.url === routePath(child.href)
-          if (active) hasActive = true
-          items.push(`<c:list-item href="${child.href}" t:content="${child.title}" ${active ? 'active' : ''} />`)
-        }
-        items.push('</c:list></c:accordion-item>')
-        items.unshift(`<c:accordion-item header="${req.t(menu.title)}&nbsp;&nbsp;" body-no-padding narrow-header ${hasActive ? 'show-on-start' : ''}>`)
-        dropdown.push(...items)
+      const dropdown = ['<div><c:accordion no-border text="nowrap" style="margin-top:-5px;margin-bottom:-5px;">']
+      const items = []
+      items.push('<c:list type="group" no-border hover>')
+      let hasActive = false
+      for (const child of menu.children) {
+        if (child.title === '-') continue
+        const active = locals._meta.url === routePath(child.href)
+        if (active) hasActive = true
+        items.push(`<c:list-item href="${child.href}" t:content="${child.title}" ${active ? 'active' : ''} />`)
       }
+      items.push('</c:list></c:accordion-item>')
+      items.unshift(`<c:accordion-item header="${req.t(menu.title)}&nbsp;&nbsp;" body-no-padding narrow-header ${hasActive ? 'show-on-start' : ''}>`)
+      dropdown.push(...items)
       dropdown.push('</c:accordion></div>')
-      return dropdown
+      return dropdown.join('\n')
     }
 
     handleNotFound = async (req) => {

@@ -23,7 +23,6 @@ async function afterBuildLocals (locals, req) {
     const title = req.t(get(r, 'config.title', req.t(camelCase(item))))
     const menuHandler = get(this, `app.${r.config.subRoute}.config.waibuAdmin.menuHandler`)
     if (menuHandler === false) continue
-    const menuCollapsible = get(this, `app.${r.config.subRoute}.config.waibuAdmin.menuCollapsible`)
     if (!route[r.config.subRoute]) {
       route[r.config.subRoute] = {
         icon: get(this, `app.${r.config.subRoute}.config.waibuMpa.icon`, 'grid'),
@@ -50,15 +49,19 @@ async function afterBuildLocals (locals, req) {
             }
           }
         }
-        if (menuCollapsible) menu = await this.buildAccordionMenu(menu, locals, req)
-        else {
-          menu = menu.map(m => {
+        const all = []
+        for (const m of menu) {
+          if (m.children) {
+            const item = this.buildAccordionMenu(m, locals, req)
+            if (all.length > 0) all.push('<c:dropdown-item divider />')
+            all.push(item)
+          } else {
             const url = routePath(m.href)
-            if (m.title === '-') return '<c:dropdown-item divider />'
-            return `<c:dropdown-item href="${url}" t:content="${m.title}"/>`
-          })
+            if (m.title === '-') all.push('<c:dropdown-item divider />')
+            else all.push(`<c:dropdown-item href="${url}" t:content="${m.title}"/>`)
+          }
         }
-        route[r.config.subRoute].html.push(...menu)
+        route[r.config.subRoute].html.push(...all)
       }
     }
     if (!menuHandler) {

@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-01-24
+
+- [2.1.7] Bug fix on menu
+
 ## 2026-01-21
 
 - [2.1.6] Bug fix on page titles
