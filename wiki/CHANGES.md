@@ -1,16 +1,20 @@
 # Changes
 
+## 2026-03-08
+
+- [2.1.8] Bug fix in ```afterBuildLocals()```
+
 ## 2026-01-24
 
-- [2.1.7] Bug fix on menu
+- [2.1.7] Bug fix in menu
 
 ## 2026-01-21
 
-- [2.1.6] Bug fix on page titles
+- [2.1.6] Bug fix in page titles
 
 ## 2026-01-19
 
-- [2.1.5] Bug fix on app title & translation
+- [2.1.5] Bug fix in app title & translation
 
 ## 2026-01-18
 
