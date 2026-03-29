@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-03-30
+
+- [2.2.0] Add inter site module supports
+
 ## 2026-03-08
 
 - [2.1.8] Bug fix in ```afterBuildLocals()```

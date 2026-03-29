@@ -8,6 +8,7 @@ async function afterBuildLocals (locals, req) {
   items.push({ icon: 'speedometer', href: routePath('waibuAdmin:/dashboard') })
   // scan subroutes
   const route = {}
+  const interSites = []
   for (const r of this.app.waibu.routes) {
     const methods = isString(r.method) ? [r.method] : r.method
     if (!(methods.includes('GET') && get(r, 'config.webApp') === 'waibuMpa' && get(r, 'config.ns') === this.ns)) continue
@@ -51,14 +52,22 @@ async function afterBuildLocals (locals, req) {
         }
         const all = []
         for (const m of menu) {
-          if (m.children) {
-            const item = this.buildAccordionMenu(m, locals, req)
-            if (all.length > 0) all.push('<c:dropdown-item divider />')
-            all.push(item)
+          if (m.interSite) {
+            // m.ns = r.config.subRoute
+            // m.ohref = routePath(`${this.ns}:/${prefix}`)
+            interSites.push(m)
           } else {
-            const url = routePath(m.href)
-            if (m.title === '-') all.push('<c:dropdown-item divider />')
-            else all.push(`<c:dropdown-item href="${url}" t:content="${m.title}"/>`)
+            if (m.children) {
+              const item = this.buildAccordionMenu(m, locals, req)
+              if (all.length > 0) all.push('<c:dropdown-item divider />')
+              all.push(item)
+            } else {
+              if (m.title === '-') all.push('<c:dropdown-item divider />')
+              else {
+                const url = routePath(m.href)
+                all.push(`<c:dropdown-item href="${url}" t:content="${m.title}"/>`)
+              }
+            }
           }
         }
         route[r.config.subRoute].html.push(...all)
@@ -75,11 +84,43 @@ async function afterBuildLocals (locals, req) {
     item.html = item.html.join('\n')
     items.push(item)
   }
-  // settings
+  // bottom
+  // Inter sites routes
+  if (req.user.interSiteAdmin) {
+    const all = [
+      '<c:dropdown-item header t:content="interSite" />',
+      '<c:dropdown-item divider />'
+    ]
+    for (const m of interSites) {
+      if (m.children) {
+        const item = this.buildAccordionMenu(m, locals, req)
+        if (all.length > 0) all.push('<c:dropdown-ioiltem divider />')
+        all.push(item)
+      } else {
+        if (m.title === '-') all.push('<c:dropdown-item divider />')
+        else {
+          const url = routePath(m.href)
+          all.push(`<c:dropdown-item href="${url}" t:content="${m.title}"/>`)
+        }
+      }
+    }
+    items.push({
+      title: 'interSite',
+      bottom: true,
+      interSite: true,
+      icon: 'share',
+      'dropdown-auto-close': 'outside',
+      dropdown: true,
+      html: all.join('\n')
+    })
+  }
   items.push({ component: 'navDropdownSetting', bottom: true, 'icon-style': 'font-size: 1.5rem;' })
 
   for (const item of items) {
-    if (locals._meta.url.startsWith(item.href ?? item.ohref)) item.active = true
+    const url = item.href ?? item.ohref
+    if (!locals._meta.url.includes('/_is_/')) {
+      if (locals._meta.url.startsWith(url)) item.active = true
+    } else if (item.interSite) item.active = true
   }
   locals.sidebar = items
 }
