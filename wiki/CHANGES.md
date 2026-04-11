@@ -1,5 +1,8 @@
 # Changes
 
+- [2.3.0] Add ```linkToDetails()```
+- [2.3.0] Inter site module no longer in own menu
+
 ## 2026-03-30
 
 - [2.2.0] Add inter site module supports
