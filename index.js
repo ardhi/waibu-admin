@@ -73,13 +73,13 @@ async function factory (pkgName) {
       const { getPluginPrefix } = this.app.waibu
       const prefix = getPluginPrefix(ns)
       let refName
-      let formatValue
+      let format
       if (isString(opts)) refName = opts
-      else ({ refName, formatValue } = opts)
+      else ({ refName, format } = opts)
       return async function (val, rec, { req, linkOnly }) {
         if (!refName) refName = route
         if (isEmpty(val)) return val
-        if (formatValue) val = await formatValue.call(this, val, rec, { req })
+        if (format) val = await format.call(this, val, rec, { req })
         const id = get(rec, `_ref.${refName}.id`)
         if (!id) return val
         const url = routePath(`waibuAdmin:/${prefix}/${route}/details?id=${id}`)

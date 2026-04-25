@@ -1,5 +1,12 @@
 # Changes
 
+## 2026-04-25
+
+- [2.4.0] Change options to format value using the new key set by dobo
+- [2.4.0] Remove ```options.retainOriginalValue``` since it is not needed anymore
+
+## 2026-04-10
+
 - [2.3.0] Add ```linkToDetails()```
 - [2.3.0] Inter site module no longer in own menu
 
