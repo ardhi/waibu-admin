@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-05-11
+
+- [2.5.0] Updates to match ```dobo@2.23.0``` specs
+- [2.5.0] Remove ```linkToDetails()``` and use auto links provided by dobo/waibu-db instead
+
 ## 2026-04-25
 
 - [2.4.0] Change options to format value using the new key set by dobo

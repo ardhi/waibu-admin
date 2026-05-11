@@ -66,26 +66,6 @@ async function factory (pkgName) {
       }
       return url
     }
-
-    linkToDetails = (ns, route, opts = {}) => {
-      const { isEmpty, get, isString } = this.app.lib._
-      const { routePath } = this.app.waibu
-      const { getPluginPrefix } = this.app.waibu
-      const prefix = getPluginPrefix(ns)
-      let refName
-      let format
-      if (isString(opts)) refName = opts
-      else ({ refName, format } = opts)
-      return async function (val, rec, { req, linkOnly }) {
-        if (!refName) refName = route
-        if (isEmpty(val)) return val
-        if (format) val = await format.call(this, val, rec, { req })
-        const id = get(rec, `_ref.${refName}.id`)
-        if (!id) return val
-        const url = routePath(`waibuAdmin:/${prefix}/${route}/details?id=${id}`)
-        return linkOnly ? url : `<a href="${url}">${val}</a>`
-      }
-    }
   }
 
   return WaibuAdmin

@@ -1,0 +1,8 @@
+[{
+  "path": "waibuAdmin:/**/*",
+  "methods": ["GET", "POST", "UPDATE", "DELETE"],
+  "teams": ["administrator"],
+  "_immutable": true,
+  "siteId": "?:SumbaSite::alias:default",
+  "status": "ACTIVE"
+}]
