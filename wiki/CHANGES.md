@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-05-16
+
+- [2.6.0] Change to the new route guard specs
+
 ## 2026-05-11
 
 - [2.5.0] Updates to match ```dobo@2.23.0``` specs
