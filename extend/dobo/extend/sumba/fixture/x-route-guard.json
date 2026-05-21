@@ -1,0 +1,5 @@
+[{
+  "path": "waibuAdmin:/**/*",
+  "methods": ["GET", "POST", "UPDATE", "DELETE"],
+  "status": "ACTIVE"
+}]

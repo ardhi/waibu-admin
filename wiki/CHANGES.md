@@ -1,5 +1,11 @@
 # Changes
 
+## 2026-05-22
+
+- [2.6.1] Bug fix in ```dashboard.js```
+- [2.6.1] Bug fix in ```afterBuildLocals()``` hook
+- [2.6.1] Bug fix in ```buildAccordionMenu()```
+
 ## 2026-05-16
 
 - [2.6.0] Change to the new route guard specs

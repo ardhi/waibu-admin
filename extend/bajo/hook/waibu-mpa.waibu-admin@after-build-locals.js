@@ -1,7 +1,8 @@
-async function afterBuildLocals (locals, req) {
+async function afterBuildLocals (locals, req, opts) {
+  if (opts.partial) return
   const { callHandler, runHook } = this.app.bajo
   const { getPluginPrefix } = this.app.waibu
-  const { routePath } = this.app.waibu
+  const { routePath, findRoute } = this.app.waibu
   const { getPluginTitle } = this.app.waibuMpa
   const { get, isString, last, camelCase, cloneDeep, isFunction } = this.app.lib._
   const items = []
@@ -24,49 +25,56 @@ async function afterBuildLocals (locals, req) {
     const menuHandler = get(this, `app.${r.config.subRoute}.config.waibuAdmin.menuHandler`)
     if (menuHandler === false) continue
     if (!route[r.config.subRoute]) {
-      route[r.config.subRoute] = {
-        icon: get(this, `app.${r.config.subRoute}.config.waibuMpa.icon`, 'grid'),
-        dropdown: true,
-        ns: r.config.subRoute,
-        ohref: routePath(`${this.ns}:/${prefix}`),
-        html: [
-          `<c:dropdown-item header t:content="${getPluginTitle(r.config.subRoute, req)}" />`,
-          '<c:dropdown-item divider />'
-        ]
-      }
       if (menuHandler) {
         const cprefix = getPluginPrefix(r.config.subRoute)
-        route[r.config.subRoute]['dropdown-auto-close'] = 'outside'
         let menu
         if (isString(menuHandler)) menu = await callHandler(menuHandler, locals, req)
         else if (isFunction(menuHandler)) menu = await menuHandler.call(this.app[r.config.subRoute], locals, req)
         else menu = cloneDeep(menuHandler)
         await runHook(`${r.config.subRoute}:afterAdminMenu`, menu, locals, req)
-        for (const m of menu) {
-          if (m.children) {
-            for (const c of m.children) {
-              if (c.href) c.href = c.href.replace('{prefix}', cprefix)
-            }
-          }
-        }
         const all = []
         for (const m of menu) {
           if (m.children) {
+            m.children = m.children.filter(c => {
+              const route = findRoute(c.href)
+              if (!route) return false
+              c.href = c.href.replace('{prefix}', cprefix) // TODO: need observation
+              if (get(route, 'config.xSite')) return req.user.isXSiteAdmin
+              return req.user.isAdmin
+            })
+            if (m.children.length === 0) continue
             const item = this.buildAccordionMenu(m, locals, req)
             if (all.length > 0) all.push('<c:dropdown-item divider />')
             all.push(item)
           } else {
+            const route = findRoute(m.href)
+            if (!route) continue
+            if (get(route, 'config.xSite') && !req.user.isXSiteAdmin) continue
+            if (!req.user.isAdmin) continue
             if (m.title === '-') all.push('<c:dropdown-item divider />')
             else {
-              const url = routePath(m.href)
-              all.push(`<c:dropdown-item href="${url}" t:content="${m.title}"/>`)
+              const href = routePath(m.href, { params: m.params })
+              all.push(`<c:dropdown-item href="${href}" t:content="${m.title}"/>`)
             }
           }
         }
-        route[r.config.subRoute].html.push(...all)
+        if (all.length > 0) {
+          route[r.config.subRoute] = {
+            icon: get(this, `app.${r.config.subRoute}.config.waibuMpa.icon`, 'grid'),
+            dropdown: true,
+            ns: r.config.subRoute,
+            ohref: routePath(`${this.ns}:/${prefix}`),
+            html: [
+              `<c:dropdown-item header t:content="${getPluginTitle(r.config.subRoute, req)}" />`,
+              '<c:dropdown-item divider />'
+            ]
+          }
+          route[r.config.subRoute]['dropdown-auto-close'] = 'outside'
+          route[r.config.subRoute].html.push(...all)
+        }
       }
     }
-    if (!menuHandler) {
+    if (!menuHandler && route[r.config.subRoute]) {
       const active = req.url.startsWith(url)
       route[r.config.subRoute].html.push(`<c:dropdown-item href="${url}" t:content="${title}" ${active ? 'active' : ''}/>`)
     }
