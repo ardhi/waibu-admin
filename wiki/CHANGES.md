@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-05-25
+
+- [2.6.2] Bug fix in ```after-build-locals.js```
+
 ## 2026-05-22
 
 - [2.6.1] Bug fix in ```dashboard.js```

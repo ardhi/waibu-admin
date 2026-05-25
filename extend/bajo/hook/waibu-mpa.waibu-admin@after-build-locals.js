@@ -1,5 +1,4 @@
 async function afterBuildLocals (locals, req, opts) {
-  if (opts.partial) return
   const { callHandler, runHook } = this.app.bajo
   const { getPluginPrefix } = this.app.waibu
   const { routePath, findRoute } = this.app.waibu
