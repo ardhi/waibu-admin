@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-05-30
+
+- [2.6.3] Bug fix in ```route-guard.json``` fixture
+
 ## 2026-05-25
 
 - [2.6.2] Bug fix in ```after-build-locals.js```

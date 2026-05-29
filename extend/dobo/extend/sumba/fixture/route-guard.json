@@ -1,7 +1,7 @@
 [{
   "path": "waibuAdmin:/**/*",
   "methods": ["GET", "POST", "UPDATE", "DELETE"],
-  "siteId": "?:SumbaSite::alias:default",
-  "teamIds": ["?:SumbaTeam::alias:administrator+siteId:{siteId}"],
+  "siteId": "?:SumbaSite::alias:'default'",
+  "teamIds": ["?:SumbaTeam::alias:'administrator'+siteId:'{siteId}'"],
   "status": "ACTIVE"
 }]
