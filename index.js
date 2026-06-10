@@ -22,8 +22,7 @@ async function factory (pkgName) {
         },
         waibuMpa: {
           redirect: {
-            '/': 'waibuAdmin:/dashboard',
-            '/*': 'waibuAdmin:handleNotFound'
+            '/': 'waibuAdmin:/dashboard'
           }
         }
       }

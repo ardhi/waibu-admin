@@ -1,5 +1,10 @@
 # Changes
 
+## 2026-06-10
+
+- [2.7.0] Add folder redirects
+- [2.7.0] Add secure routes declaration
+
 ## 2026-05-30
 
 - [2.6.3] Bug fix in ```route-guard.json``` fixture

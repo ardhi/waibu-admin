@@ -1,0 +1,11 @@
+[{
+  "path": "/**/*",
+  "teamIds": ["?:SumbaTeam::alias:administrator+siteId:{siteId}"],
+  "allTeams": false,
+  "_immutable": ["*"]
+}, {
+  "path": "restapi:/**/*",
+  "teamIds": ["?:SumbaTeam::alias:administrator+siteId:{siteId}"],
+  "allTeams": false,
+  "_immutable": ["*"]
+}]
