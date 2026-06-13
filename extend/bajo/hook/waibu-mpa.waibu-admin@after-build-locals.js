@@ -38,8 +38,8 @@ async function afterBuildLocals (locals, req, opts) {
               const route = findRoute(c.href)
               if (!route) return false
               c.href = c.href.replace('{prefix}', cprefix) // TODO: need observation
-              if (get(route, 'config.xSite')) return req.user.isXSiteAdmin
-              return req.user.isAdmin
+              if (get(route, 'config.xSite')) return get(req, 'user.isXSiteAdmin')
+              return get(req, 'user.isAdmin')
             })
             if (m.children.length === 0) continue
             const item = this.buildAccordionMenu(m, locals, req)
@@ -48,8 +48,8 @@ async function afterBuildLocals (locals, req, opts) {
           } else {
             const route = findRoute(m.href)
             if (!route) continue
-            if (get(route, 'config.xSite') && !req.user.isXSiteAdmin) continue
-            if (!req.user.isAdmin) continue
+            if (get(route, 'config.xSite') && !get(req, 'user.isXSiteAdmin')) continue
+            if (!get(req, 'user.isAdmin')) continue
             if (m.title === '-') all.push('<c:dropdown-item divider />')
             else {
               const href = routePath(m.href, { params: m.params })

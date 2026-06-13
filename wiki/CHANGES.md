@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-06-12
+
+- [2.7.1] Bug fix in ```afterBuildLocals``` hook
+
 ## 2026-06-10
 
 - [2.7.0] Add folder redirects
