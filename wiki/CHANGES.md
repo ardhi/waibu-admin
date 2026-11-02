@@ -1,8 +1,12 @@
 # Changes
 
+## 2026-11-02
+
+- [2.7.2] Bug fix in templates
+
 ## 2026-06-12
 
-- [2.7.1] Bug fix in ```afterBuildLocals``` hook
+- [2.7.1] Bug fix in `afterBuildLocals` hook
 
 ## 2026-06-10
 
@@ -11,17 +15,17 @@
 
 ## 2026-05-30
 
-- [2.6.3] Bug fix in ```route-guard.json``` fixture
+- [2.6.3] Bug fix in `route-guard.json` fixture
 
 ## 2026-05-25
 
-- [2.6.2] Bug fix in ```after-build-locals.js```
+- [2.6.2] Bug fix in `after-build-locals.js`
 
 ## 2026-05-22
 
-- [2.6.1] Bug fix in ```dashboard.js```
-- [2.6.1] Bug fix in ```afterBuildLocals()``` hook
-- [2.6.1] Bug fix in ```buildAccordionMenu()```
+- [2.6.1] Bug fix in `dashboard.js`
+- [2.6.1] Bug fix in `afterBuildLocals()` hook
+- [2.6.1] Bug fix in `buildAccordionMenu()`
 
 ## 2026-05-16
 
@@ -29,17 +33,17 @@
 
 ## 2026-05-11
 
-- [2.5.0] Updates to match ```dobo@2.23.0``` specs
-- [2.5.0] Remove ```linkToDetails()``` and use auto links provided by dobo/waibu-db instead
+- [2.5.0] Updates to match `dobo@2.23.0` specs
+- [2.5.0] Remove `linkToDetails()` and use auto links provided by dobo/waibu-db instead
 
 ## 2026-04-25
 
 - [2.4.0] Change options to format value using the new key set by dobo
-- [2.4.0] Remove ```options.retainOriginalValue``` since it is not needed anymore
+- [2.4.0] Remove `options.retainOriginalValue` since it is not needed anymore
 
 ## 2026-04-10
 
-- [2.3.0] Add ```linkToDetails()```
+- [2.3.0] Add `linkToDetails()`
 - [2.3.0] Inter site module no longer in own menu
 
 ## 2026-03-30
@@ -48,7 +52,7 @@
 
 ## 2026-03-08
 
-- [2.1.8] Bug fix in ```afterBuildLocals()```
+- [2.1.8] Bug fix in `afterBuildLocals()`
 
 ## 2026-01-24
 
@@ -68,4 +72,4 @@
 
 ## 2025-12-30
 
-- [2.1.0] Ported to match ```bajo@2.2.x``` & ```dobo@2.2.x``` specs
+- [2.1.0] Ported to match `bajo@2.2.x` & `dobo@2.2.x` specs
