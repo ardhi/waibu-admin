@@ -25,7 +25,7 @@ async function afterBuildLocals (locals, req, opts) {
     if (menuHandler === false) continue
     if (!route[r.config.subRoute]) {
       if (menuHandler) {
-        const cprefix = getPluginPrefix(r.config.subRoute)
+        const cprefix = getPluginPrefix(r.config.subRoute, 'waibuMpa', false)
         let menu
         if (isString(menuHandler)) menu = await callHandler(menuHandler, locals, req)
         else if (isFunction(menuHandler)) menu = await menuHandler.call(this.app[r.config.subRoute], locals, req)

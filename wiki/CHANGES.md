@@ -1,5 +1,9 @@
 # Changes
 
+## 2026-11-12
+
+- [2.7.3] Bug fix in `waibu-mpa.waibu-admin@after-build-locals.js`
+
 ## 2026-11-02
 
 - [2.7.2] Bug fix in templates
